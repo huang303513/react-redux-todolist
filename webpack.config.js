@@ -6,6 +6,7 @@ var BUILD_PATH = path.resolve(ROOT_PATH, 'build');
 var TEM_PATH = path.resolve(ROOT_PATH, 'templates');
 var htmlWebpackPlugin = require('html-webpack-plugin'); // 自动生成build文件夹及文件：
 module.exports = {
+    mode: 'development',
     devtool: 'eval-source-map',
     entry: {
         app: path.resolve(APP_PATH, 'index.js')
@@ -18,7 +19,6 @@ module.exports = {
          extensions: [".js", ".json", ".jsx", ".css",".scss"],
     },
     devServer: {
-        inline: true, //实时刷新
         port: 3000,
     },
     module: {
@@ -27,8 +27,8 @@ module.exports = {
             exclude: /node_modules/,
             use:{
                 loader: 'babel-loader',
-                query: {
-                    presets:['latest','stage-0','react'],  // 加入stage-0 尝试使用es7，
+                options: {
+                    presets:['env','react'],  // 加入stage-0 尝试使用es7，
                 }
             }
         }, {
@@ -49,7 +49,7 @@ module.exports = {
     },
     plugins: [
         //这个使用uglifyJs压缩你的js代码
-        new webpack.optimize.UglifyJsPlugin({ minimize: true }),
+        // new webpack.optimize.UglifyJsPlugin({ minimize: true }),
         new htmlWebpackPlugin({
             title: 'react-redux-todolist',
             template: path.resolve(TEM_PATH, 'index.html'),
